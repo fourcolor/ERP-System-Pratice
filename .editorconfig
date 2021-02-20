@@ -1,0 +1,7 @@
+﻿[*.cs]
+
+# IDE0025: 使用屬性的運算式主體
+dotnet_diagnostic.IDE0025.severity = warning
+
+# IDE0025: 使用屬性的運算式主體
+csharp_style_expression_bodied_properties = true:warning
