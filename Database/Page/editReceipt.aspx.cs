@@ -402,6 +402,7 @@ namespace Database
                 string rate = (sender as TextBox).Text;
                 double shipment = Convert.ToDouble(((TextBox)GridView2.FooterRow.FindControl("Footershipment")).Text);
                 double jprice = Convert.ToDouble(((Label)GridView2.FooterRow.FindControl("FooterJprice")).Text);
+                ((TextBox)GridView2.FooterRow.FindControl("Footershipped")).Text = shipment.ToString();
                 if (status == 2)
                 {
                     (GridView2.FooterRow.FindControl("FooterTprice") as Label).Text = rate;
