@@ -14,12 +14,12 @@ namespace Database
             "FROM data.orderdetail " +
             "right join data.recieptdetail " +
             "on recieptdetail.訂單編號= orderdetail.訂單編號 And recieptdetail.流水號 = orderdetail.流水號 " +
-            "inner join data.receipt " +
+            "left join data.receipt  " +
             "on receipt.receiptID = recieptdetail.收貨編號 " +
             "inner join data.order " +
             "on data.order.訂單編號= orderdetail.訂單編號";
         public static string shipmentCond = "where 1=1 ";
-        public static string shipmentGroup = "group by 品牌";
+        public static string shipmentGroup = "group by 品牌,recieptdetail.其他 order by 品牌 DEsc";
         public static string shipmentdetailStr =
             "SELECT orderdetail.品番,orderdetail.商品類別,orderdetail.上代,orderdetail.色番,recieptdetail.其他,orderdetail.ｶﾗｰ,orderdetail.未出數量,orderdetail.ｻｲｽﾞ,orderdetail.訂貨数量,recieptdetail.匯率,orderdetail.品牌,sum(recieptdetail.實收數量) as 數量,sum(recieptdetail.小計) as 金額,recieptdetail.匯率,recieptdetail.備註 " +
             "FROM data.orderdetail " +
@@ -40,11 +40,11 @@ namespace Database
             {
                 if(o)
                 {
-                    shipmentCond = " where data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 = 'Y'";
+                    shipmentCond = " where (data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 != 'Y' or recieptdetail.訂單編號 is null ) ";
                 }
                 else
                 {
-                    shipmentCond = " where data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 != 'Y'";
+                    shipmentCond = " where (data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 != 'Y' or recieptdetail.訂單編號 is null ) ";
                 }
             }
             else
