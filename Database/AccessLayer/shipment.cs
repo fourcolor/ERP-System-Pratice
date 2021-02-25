@@ -9,6 +9,8 @@ namespace Database.AccessLayer
     public class shipment
     {
         public string brand { get; set; }
+
+        public string other { get; set; }
         public string guestID { get; set; }
         public string ShipmentDate { get; set; }
         public bool o;
@@ -16,7 +18,7 @@ namespace Database.AccessLayer
         {
             get
             {
-                return shipmentAccessLayer.getShipmentdetails(this.brand, this.guestID, this.ShipmentDate, this.o);
+                return shipmentAccessLayer.getShipmentdetails(this.brand, this.guestID, this.ShipmentDate, this.o,this.other);
             }
         }
     }

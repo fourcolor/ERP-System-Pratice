@@ -122,7 +122,7 @@
                 <asp:Parameter DefaultValue="false" Name="o" Type="Boolean" />
             </SelectParameters>
         </asp:ObjectDataSource>
-        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" Width="796px">
+        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" Width="796px" Visible="False">
             <Columns>
                 <asp:BoundField DataField="brand" HeaderText="brand" SortExpression="brand" ItemStyle-Width="75px" >
 <ItemStyle Width="75px"></ItemStyle>

@@ -15,9 +15,7 @@ namespace Database
             "right join data.recieptdetail " +
             "on recieptdetail.訂單編號= orderdetail.訂單編號 And recieptdetail.流水號 = orderdetail.流水號 " +
             "left join data.receipt  " +
-            "on receipt.receiptID = recieptdetail.收貨編號 " +
-            "inner join data.order " +
-            "on data.order.訂單編號= orderdetail.訂單編號";
+            "on receipt.receiptID = recieptdetail.收貨編號 ";
         public static string shipmentCond = "where 1=1 ";
         public static string shipmentGroup = "group by 品牌,recieptdetail.其他 order by 品牌 DEsc";
         public static string shipmentdetailStr =
@@ -25,12 +23,10 @@ namespace Database
             "FROM data.orderdetail " +
             "right join data.recieptdetail " +
             "on recieptdetail.訂單編號= orderdetail.訂單編號 And recieptdetail.流水號 = orderdetail.流水號 " +
-            "inner join data.receipt " +
-            "on receipt.receiptID = recieptdetail.收貨編號 " +
-            "inner join data.order " +
-            "on data.order.訂單編號= orderdetail.訂單編號 ";
+            "left join data.receipt " +
+            "on receipt.receiptID = recieptdetail.收貨編號 ";
         public static string shipmentdetailCond = "where 1=1 ";
-        public static string shipmentdetailGroup = "group by 品番,其他";
+        public static string shipmentdetailGroup = "group by 品番,其他 order by 品牌 DEsc";
         public static List<shipment> getships(string guestID, string shipmentDate,bool o)
         {
             List<shipment> shipments = new List<shipment>();
@@ -40,11 +36,11 @@ namespace Database
             {
                 if(o)
                 {
-                    shipmentCond = " where (data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 != 'Y' or recieptdetail.訂單編號 is null ) ";
+                    shipmentCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 != 'Y' or recieptdetail.訂單編號 is null ) ";
                 }
                 else
                 {
-                    shipmentCond = " where (data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 != 'Y' or recieptdetail.訂單編號 is null ) ";
+                    shipmentCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 != 'Y' or recieptdetail.訂單編號 is null ) ";
                 }
             }
             else
@@ -57,7 +53,7 @@ namespace Database
                 shipment shipment = new shipment();
                 shipment.guestID = guestID;
                 shipment.ShipmentDate = shipmentDate;
-                shipment.o = o;
+                shipment.other = i["其他"].ToString();
                 shipment.brand = i["品牌"].ToString();
                 if(o)
                 {
@@ -72,20 +68,21 @@ namespace Database
             return shipments;
         }
 
-        public static List<shipmentdetail> getShipmentdetails(string brand, string guestID, string shipmentDate,bool o)
+        public static List<shipmentdetail> getShipmentdetails(string brand, string guestID, string shipmentDate,bool o,string other)
         {
             List<shipmentdetail> shipmentdetails = new List<shipmentdetail>(); 
             DataSet dataSet;
             sqlConn sqlConn = new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");
-            if (guestID != null && guestID != "" && shipmentDate != null && shipmentDate != "" && brand!="" && brand!=null)
+            if (guestID != null && guestID != "" && shipmentDate != null && shipmentDate != "" && ((brand!="" && brand!=null)|| (other != "" && other != null)))
             {
                 if(o)
                 {
-                    shipmentdetailCond = " where data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 = 'Y' and orderdetail.品牌='"+brand+"' ";
+                    shipmentdetailCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 = 'Y' and orderdetail.品牌='"+brand+ "' )|| (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and recieptdetail.其他 = '" + other+"') ";
+                    //(data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='') || (data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and recieptdetail.其他 = '車資' )
                 }
                 else
                 {
-                    shipmentdetailCond = " where data.order.客戶編號 = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='" + brand + "' ";
+                    shipmentdetailCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='" + brand + "' )|| (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and recieptdetail.其他 = '" + other + "') ";
                 }
             }
             else
@@ -96,10 +93,13 @@ namespace Database
             foreach(DataRow i in dataSet.Tables[0].Rows)
             {
                 shipmentdetail shipmentdetail = new shipmentdetail();
-                shipmentdetail.productID = i["品番"].ToString();
-                if(shipmentdetail.productID==""|| shipmentdetail.productID==null)
+                if(other!="")
                 {
-                    shipmentdetail.productID = i["其他"].ToString();
+                    shipmentdetail.productID = other;
+                }
+                else
+                {
+                    shipmentdetail.productID = i["品番"].ToString();
                 }
                 if(o)
                 {
