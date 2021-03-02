@@ -12,9 +12,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
     <script>
         $(function () {
-            $user = $("[id$='FooterorderID']");
+            $user = $("[class$='user']");
             $user.select2({
-                maximumSelectionLength: 2,
+                //maximumSelectionLength: 1,
                 language: 'zh-TW',
                 width: '100%',
                 type: "POST",
@@ -124,7 +124,7 @@
                         <asp:Label ID="Label3" runat="server" Text='<%# Eval("orderID") %>'></asp:Label>
                     </EditItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="FooterorderID" class="user" runat="server" mutiple AppendDataBoundItems="True" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged1" AutoPostBack="True">
+                        <asp:DropDownList ID="FooterorderID" class="user" runat="server" AppendDataBoundItems="True" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged1" AutoPostBack="True" Width="75px">
                         </asp:DropDownList>
                     </FooterTemplate>
                     <ItemTemplate>
@@ -137,7 +137,7 @@
                         <asp:Label ID="Label4" runat="server" Text='<%# Eval("SERIALNUMBER") %>'></asp:Label>
                     </EditItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="Footerorderser" class="user" runat="server" mutiple AppendDataBoundItems="True" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="Footerorderser_SelectedIndexChanged" AutoPostBack="True">
+                        <asp:DropDownList ID="Footerorderser" class="user" runat="server" AppendDataBoundItems="True" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="Footerorderser_SelectedIndexChanged" AutoPostBack="True">
                         </asp:DropDownList>
                     </FooterTemplate>
                     <ItemTemplate>

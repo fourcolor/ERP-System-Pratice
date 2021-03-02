@@ -122,17 +122,19 @@ namespace Database
             }
         }
 
-        public static DataSet getinquire(string orderID, string SERIALNUMBER)
+        public static string inorderID = "";
+        public static string inSERIALNUMBER = "";
+        public static DataSet getinquire()
         {
             sqlConn sqlConn =new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");
             DataSet dataSet;
-            if (orderID != "" && orderID != null && SERIALNUMBER != "" && SERIALNUMBER != null)
+            if (inorderID != "" && inorderID != null && inSERIALNUMBER != "" && inSERIALNUMBER != null)
             {
-                dataSet = sqlConn.SelectCommand("SELECT * FROM data.recieptdetail where 訂單編號 = " + orderID + " and 流水號 =" + SERIALNUMBER + ";");
+                dataSet = sqlConn.SelectCommand("SELECT * FROM data.recieptdetail where 訂單編號 = '" + inorderID + "' and 流水號 ='" + inSERIALNUMBER + "';");
             }
             else
             {
-                dataSet = sqlConn.SelectCommand("SELECT * FROM data.recieptdetail where 1=1;");
+                dataSet = sqlConn.SelectCommand("SELECT * FROM data.recieptdetail where 訂單編號 = '" + inorderID + "' and 流水號 ='" + inSERIALNUMBER + "';");
             }
             return dataSet;
         }

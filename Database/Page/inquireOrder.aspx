@@ -165,16 +165,26 @@
             </tr>
         </table>
         <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Visible="False"></asp:Calendar>
-        <asp:GridView ID="GridView3" runat="server" AllowPaging="True" DataSourceID="ObjectDataSource3" OnSelectedIndexChanged="GridView3_SelectedIndexChanged" Visible="False">
+        <asp:GridView ID="GridView3" runat="server" AllowPaging="True" DataSourceID="ObjectDataSource3" OnSelectedIndexChanged="GridView3_SelectedIndexChanged" Visible="False" AutoGenerateColumns="False">
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
+                <asp:TemplateField HeaderText="客戶ID">
+                    <ItemTemplate>
+                        <asp:Label ID="guestID"  Width="75px" runat="server" Text='<%# Bind("guestID") %>'  ></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
+                <asp:TemplateField HeaderText="客戶名稱">
+                    <ItemTemplate>
+                        <asp:Label ID="guestName"  Width="75px" runat="server" Text='<%# Bind("guestName") %>'  ></asp:Label>
+                    </ItemTemplate>
+                </asp:TemplateField>
             </Columns>
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSource3" runat="server" SelectMethod="getguest" TypeName="Database.AccessLayer.guestAccessLayer"></asp:ObjectDataSource>
         <br />
         <asp:Button ID="Button1" runat="server" Text="搜尋" OnClick="Button1_Click" />
         <br />
-        <asp:GridView ID="GridView1" runat="server" DataSourceID="ObjectDataSource1" OnSelectedIndexChanged="GridView1_SelectedIndexChanged" AllowPaging="True" Width="1228px">
+        <asp:GridView ID="GridView1" runat="server" DataSourceID="ObjectDataSource1" AllowPaging="True" Width="1228px" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
             </Columns>
@@ -185,10 +195,6 @@
         <asp:GridView ID="GridView2" runat="server" DataSourceID="ObjectDataSource2" AllowPaging="True" Width="1104px">
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" SelectMethod="getinquire" TypeName="Database.ReceiptDetailAccessLayer">
-            <SelectParameters>
-                <asp:ControlParameter ControlID="GridView1" DefaultValue="&quot;&quot;" Name="orderID" PropertyName="SelectedRow.Cells[1].Text" Type="String" />
-                <asp:ControlParameter ControlID="GridView1" DefaultValue="&quot;&quot;" Name="SERIALNUMBER" PropertyName="SelectedRow.Cells[2].Text" Type="String" />
-            </SelectParameters>
         </asp:ObjectDataSource>
     </form>
 </body>

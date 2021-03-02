@@ -75,14 +75,29 @@ namespace Database
             sqlConn sqlConn = new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");
             if (guestID != null && guestID != "" && shipmentDate != null && shipmentDate != "" && ((brand!="" && brand!=null)|| (other != "" && other != null)))
             {
-                if(o)
+                if(other=="")
                 {
-                    shipmentdetailCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 = 'Y' and orderdetail.品牌='"+brand+ "' )|| (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and recieptdetail.其他 = '" + other+"') ";
-                    //(data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='') || (data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and recieptdetail.其他 = '車資' )
+                    if (o)
+                    {
+                        shipmentdetailCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 = 'Y' and orderdetail.品牌='" + brand + "' ) ";
+                        //(data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='') || (data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and recieptdetail.其他 = '車資' )
+                    }
+                    else
+                    {
+                        shipmentdetailCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='" + brand + "' ) ";
+                    }
                 }
                 else
                 {
-                    shipmentdetailCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='" + brand + "' )|| (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and recieptdetail.其他 = '" + other + "') ";
+                    if (o)
+                    {
+                        shipmentdetailCond = " where  (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and recieptdetail.其他 = '" + other + "') ";
+                        //(data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='') || (data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and recieptdetail.其他 = '車資' )
+                    }
+                    else
+                    {
+                        shipmentdetailCond = " where  (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and recieptdetail.其他 = '" + other + "') ";
+                    }
                 }
             }
             else

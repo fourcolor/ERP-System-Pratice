@@ -256,9 +256,13 @@
                     </EditItemTemplate>
                     <FooterTemplate>
                         <asp:TextBox ID="shippedDateBox" runat="server" Width="75px"></asp:TextBox>
+                        <asp:ImageButton ID="footerImageButton" runat="server" AlternateText="No Image available" Height="16px" ImageUrl="~/pic/calendar.jpg" OnClick="footerImageButton_Click" Width="16px" />
+                        <asp:Calendar ID="footerCalendar" runat="server" OnSelectionChanged="footerCalendar_SelectionChanged" Visible="False"></asp:Calendar>
                     </FooterTemplate>
                     <ItemTemplate>
                         <asp:TextBox ID="Label18" Width="75px" runat="server" Text='<%# Bind("shippedDate") %>' OnTextChanged="Label18_TextChanged"></asp:TextBox>
+                        <asp:ImageButton ID="ImageButton3" runat="server" AlternateText="No Image available" Height="16px" ImageUrl="~/pic/calendar.jpg" OnClick="ImageButton3_Click" Width="16px" />
+                        <asp:Calendar ID="Calendar2" runat="server" OnSelectionChanged="Calendar2_SelectionChanged" Visible="False"></asp:Calendar>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="小計" SortExpression="tprice">
@@ -331,7 +335,7 @@
                 <asp:Parameter Name="SERIALNUMBER" Type="String" />
             </DeleteParameters>
         </asp:ObjectDataSource>
-        <asp:Button ID="Button3" runat="server" Text="保存" OnClick="Button3_Click" OnClientClick="footerConfirm()"/>
+        <asp:Button ID="Button3" runat="server" Text="保存" OnClick="Button3_Click" OnClientClick="footerConfirm()" style="height: 21px"/>
         <p>
             <asp:Label ID="Message" runat="server"></asp:Label>
         </p>

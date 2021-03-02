@@ -11,6 +11,7 @@ namespace Database
         public string productType { get; set; }
         public string price { get; set; }
         public string DeliveryDate { get; set; }
+        public string replyDate { get; set; }
         public string colorNum { get; set; }
         public string color { get; set; }
         public string size { get; set; }
@@ -26,6 +27,7 @@ namespace Database
     public class insertModeDetailAccessLayer
     {
         public static List<inserModeDetail> details = new List<inserModeDetail>();
+        public static List<inserModeDetail> adddetails = new List<inserModeDetail>();
         public static List<inserModeDetail> getInsertModeDetail()
         {
             if(details.Count==0)
@@ -45,11 +47,37 @@ namespace Database
                 detail.DeliveryDate = "";
                 detail.statement = "";
                 detail.outofstock = "";
+                detail.replyDate = "";
                 details.Add(detail);
             }
             return details;
         }
-        public static void deleteInsertModeDetail(string productID, string productType, string price, string DeliveryDate, string colorNum, string color, string size, string amount, string brand, string shipment, string unshipment, string remark)
+
+        public static List<inserModeDetail> addgetInsertModeDetail()
+        {
+            if (adddetails.Count == 0)
+            {
+                inserModeDetail detail = new inserModeDetail();
+                detail.amount = "";
+                detail.brand = "";
+                detail.color = "";
+                detail.colorNum = "";
+                detail.price = "";
+                detail.productID = "";
+                detail.productType = "";
+                detail.remark = "";
+                detail.shipment = "";
+                detail.size = "";
+                detail.unshipment = "";
+                detail.DeliveryDate = "";
+                detail.statement = "";
+                detail.outofstock = "";
+                detail.replyDate = "";
+                adddetails.Add(detail);
+            }
+            return adddetails;
+        }
+        public static void deleteInsertModeDetail(string productID, string productType, string price, string DeliveryDate, string colorNum, string color, string size, string amount, string brand, string shipment, string unshipment, string remark,string replyDate)
         {
             if (productID == null) productID="";
             if (productType == null) productType = "";
@@ -77,7 +105,8 @@ namespace Database
                     details[i].brand == brand &&
                     details[i].shipment == shipment &&
                     details[i].unshipment == unshipment &&
-                    details[i].remark == remark 
+                    details[i].remark == remark &&
+                    details[i].replyDate == replyDate
                     )
                 {
                     details.RemoveAt(i);

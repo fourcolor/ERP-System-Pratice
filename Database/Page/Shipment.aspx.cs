@@ -114,6 +114,26 @@ namespace Database
             shippedDate.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
         }
 
-
+        protected void CheckBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach (GridViewRow i in GridView1.Rows)
+            {
+                GridView gridView = i.FindControl("GridView2") as GridView;
+                foreach (GridViewRow j in gridView.Rows)
+                {
+                    CheckBox checkBox = j.FindControl("CheckBox1") as CheckBox;
+                    if (!checkBox.Checked)
+                    {
+                        j.FindControl("remarkLabel").Visible = false;
+                        j.FindControl("remarkLabelempty").Visible = true;
+                    }
+                    else
+                    {
+                        j.FindControl("remarkLabel").Visible = true;
+                        j.FindControl("remarkLabelempty").Visible = false;
+                    }
+                }
+            }
+        }
     }
 }

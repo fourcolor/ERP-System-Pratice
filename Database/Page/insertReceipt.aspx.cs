@@ -308,17 +308,15 @@ namespace Database
                 }
                 else if (!Foolproof.DateFoolproof(shipDate.Text))
                 {
-                    if (shipDate.Text == null || shipDate.Text == "")
-                    {
-                        Response.Write("<script>alert('收貨日期不得為空');</script>");
-                    }
-                    else
-                    {
-                        Response.Write("<script>alert('收貨日期錯誤');</script>");
-                    }
+                    Response.Write("<script>alert('收貨日期錯誤');</script>");
+                }
+                else if(shipDate.Text == null || shipDate.Text == "")
+                {
+                    Response.Write("<script>alert('收貨日期不得為空');</script>");
                 }
                 else
                 {
+
                     List<ReceiptDetail> receiptDetails = new List<ReceiptDetail>();
                     foreach (var i in ReceiptDetailAccessLayer.details)
                     {
@@ -608,6 +606,42 @@ namespace Database
                 ReceiptDetailAccessLayer.details[index].shipped = t.Text;
                 GridView1.DataBind();
             }
+        }
+
+        protected void ImageButton3_Click(object sender, ImageClickEventArgs e)
+        {
+            int index = (((ImageButton)sender).NamingContainer as GridViewRow).RowIndex;
+            if(GridView1.Rows[index].FindControl("Calendar2").Visible==false)
+            {
+                GridView1.Rows[index].FindControl("Calendar2").Visible = true;
+            }
+            else
+            {
+                GridView1.Rows[index].FindControl("Calendar2").Visible = false;
+            }
+        }
+
+        protected void Calendar2_SelectionChanged(object sender, EventArgs e)
+        {
+            int index = (((Calendar)sender).NamingContainer as GridViewRow).RowIndex;
+            (GridView1.Rows[index].FindControl("Label18") as TextBox).Text=(sender as Calendar).SelectedDate.ToString("yyyy/MM/dd");
+        }
+
+        protected void footerImageButton_Click(object sender, ImageClickEventArgs e)
+        {
+            if (GridView1.FooterRow.FindControl("footerCalendar").Visible == false)
+            {
+                GridView1.FooterRow.FindControl("footerCalendar").Visible = true;
+            }
+            else
+            {
+                GridView1.FooterRow.FindControl("footerCalendar").Visible = false;
+            }
+        }
+
+        protected void footerCalendar_SelectionChanged(object sender, EventArgs e)
+        {
+            (GridView1.FooterRow.FindControl("shippedDateBox") as TextBox).Text = (sender as Calendar).SelectedDate.ToString("yyyy/MM/dd");
         }
     }
 }

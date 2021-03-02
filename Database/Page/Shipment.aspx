@@ -89,8 +89,8 @@
                                     </EditItemTemplate>
                                     <ItemTemplate>
                                         <asp:Label ID="remarkLabel" runat="server" Text='<%# Bind("remark") %>'></asp:Label>
-                                        <asp:Label ID="Label3" runat="server" Text='' Visible="False"></asp:Label>
-                                        <asp:CheckBox ID="CheckBox2" runat="server" Checked="True"/>
+                                        <asp:Label ID="remarkLabelempty" runat="server" Text='' Visible="False"></asp:Label>
+                                        <asp:CheckBox ID="CheckBox2" runat="server" Checked="True" OnCheckedChanged="CheckBox2_CheckedChanged"/>
                                     </ItemTemplate>
                                     <ItemStyle Width="75px" />
                                 </asp:TemplateField>

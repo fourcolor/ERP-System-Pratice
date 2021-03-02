@@ -26,14 +26,6 @@ namespace Database
             checkBoxes.Add(CheckBox8);
         }
 
-        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            GridViewRow gridViewRow = GridView1.SelectedRow;
-            if (!IsPostBack)
-            {
-                //gridViewRow.Cells[1];
-            }
-        }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -71,12 +63,14 @@ namespace Database
             {
                 cond[2] = "";
             }
-            /*
             if (CheckBox4.Checked)
             {
                 cond[3] = " and orderdetail.品牌 = " + TextBox4.Text;
-            }*/
-            cond[3] = "";
+            }
+            else
+            {
+                cond[3] = "";
+            }
             if (CheckBox5.Checked)
             {
                 cond[4] = " and orderdetail.商品類別 = '" + TextBox5.Text + "'";
@@ -149,6 +143,7 @@ namespace Database
                 accessInquireLayse.cond += i;
             }
             GridView1.DataBind();
+            GridView1_SelectedIndexChanged(null, null);
         }
 
         protected void ImageButton4_Click(object sender, ImageClickEventArgs e)
@@ -197,11 +192,18 @@ namespace Database
 
         protected void GridView3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (this.IsPostBack)
+            try
             {
-                GridViewRow gridViewRow = GridView2.SelectedRow;
-                string s = ((Label)gridViewRow.FindControl("guestID")).Text;
-                TextBox2.Text = s;
+                if (this.IsPostBack)
+                {
+                    GridViewRow gridViewRow = GridView3.SelectedRow;
+                    string s = ((Label)gridViewRow.FindControl("guestID")).Text;
+                    TextBox2.Text = s;
+                }
+            }
+            catch
+            {
+
             }
         }
 
@@ -230,6 +232,22 @@ namespace Database
             else
             {
                 Calendar1.Visible = false;
+            }
+        }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ReceiptDetailAccessLayer.inorderID = GridView1.SelectedRow.Cells[1].Text;
+                ReceiptDetailAccessLayer.inSERIALNUMBER = GridView1.SelectedRow.Cells[2].Text;
+                GridView2.DataBind();
+            }
+            catch
+            {
+                ReceiptDetailAccessLayer.inorderID = "無";
+                ReceiptDetailAccessLayer.inSERIALNUMBER = "無";
+                GridView2.DataBind();
             }
         }
     }
