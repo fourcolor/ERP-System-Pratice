@@ -6,10 +6,46 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+        <style type="text/css">
+        #form1 {
+            font-weight: 700;
+        }
+        .auto-style19 {
+            width:100%;
+            background-color:lightgreen;
+            height: 18px;
+        }
+        .auto-style20 {
+            width: 80px;
+            height: 20px;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
+        <table class="auto-style19">
+        <tr>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Page/insert.aspx">訂單插入</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Page/addtion.aspx">追加訂單</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Page/insertReceipt.aspx">收貨新增</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Page/editReceipt.aspx">收貨修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Page/Shipment.aspx">出貨修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Page/inquireOrder.aspx">訂單查詢</asp:HyperLink>
+            </td>
+        </tr>
+        </table>
             <asp:Label ID="Label1" runat="server" Text="客戶編號: "></asp:Label>
             <asp:TextBox ID="guestID" runat="server" OnTextChanged="guestName_TextChanged"></asp:TextBox>
             <asp:ImageButton ID="ImageButton1" ImageUrl="~/pic/search.png"  AlternateText="No Image available" OnClick="findguest" runat="server" Height="16px" Width="16px" />
@@ -67,7 +103,7 @@
         <asp:Label ID="Label3" runat="server" Text="訂單編號"></asp:Label>
         <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click1" Text="Button" />
-        <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="orderID,SERIALNUMBER" DataSourceID="ObjectDataSource2" Width="1047px" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
+        <asp:GridView ID="GridView2" runat="server" AllowPaging="True" AutoGenerateColumns="False" DataKeyNames="orderID,SERIALNUMBER" DataSourceID="ObjectDataSource2" Width="1047px" BackColor="LightGoldenrodYellow" BorderColor="Tan" BorderWidth="1px" CellPadding="2" ForeColor="Black" OnSelectedIndexChanged="GridView2_SelectedIndexChanged" OnRowDataBound="GridView2_RowDataBound1">
             <AlternatingRowStyle BackColor="PaleGoldenrod" />
             <Columns>
                 <asp:TemplateField HeaderText="訂單編號" InsertVisible="False" SortExpression="orderID">
@@ -102,10 +138,13 @@
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="商品類別" SortExpression="productType">
                     <EditItemTemplate>
-                        <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("productType") %>' Width="75px"></asp:TextBox>
+                        <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("productType") %>' Width="75px" Visible="False"></asp:TextBox>
+                        <asp:DropDownList ID="tproductType" runat="server" AutoPostBack="True" OnDataBound="tproductType_DataBound" OnSelectedIndexChanged="tproductType_SelectedIndexChanged">
+                        </asp:DropDownList>
                     </EditItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="productTypeFooter" runat="server" Width="75px" Text =""></asp:TextBox>
+                        <asp:DropDownList ID="DropDownList2" runat="server" OnDataBound="tproductType_DataBound">
+                        </asp:DropDownList>
                     </FooterTemplate>
                     <ItemTemplate>
                         <asp:Label ID="Label4" runat="server" Text='<%# Bind("productType") %>' Width="75px"></asp:Label>

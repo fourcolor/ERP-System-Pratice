@@ -29,9 +29,43 @@
         #form1 {
             font-weight: 700;
         }
+        .auto-style1 {
+            width:100%;
+            background-color:lightgreen;
+            height: 18px;
+        }
+        .auto-style2 {
+            width: 80px;
+            height: 20px;
+        }
+        .auto-style3 {
+            height: 20px;
+        }
     </style>
 </head>
 <body>
+    <table class="auto-style1">
+        <tr>
+            <td class="auto-style2">
+                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Page/insert.aspx">訂單插入</asp:HyperLink>
+            </td>
+            <td class="auto-style2">
+                <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Page/addtion.aspx">追加訂單</asp:HyperLink>
+            </td>
+            <td class="auto-style2">
+                <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Page/edit.aspx">訂單修改</asp:HyperLink>
+            </td>
+            <td class="auto-style2">
+                <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Page/editReceipt.aspx">收貨修改</asp:HyperLink>
+            </td>
+            <td class="auto-style2">
+                <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Page/Shipment.aspx">出貨新增</asp:HyperLink>
+            </td>
+            <td class="auto-style2">
+                <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Page/inquireOrder.aspx">訂單搜尋</asp:HyperLink>
+            </td>
+        </tr>
+    </table>
     <form id="form1" runat="server">
         <div>
             <asp:Label ID="Label23" runat="server" Text="客戶"></asp:Label>

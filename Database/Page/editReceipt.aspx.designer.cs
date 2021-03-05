@@ -24,6 +24,60 @@ namespace Database
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
 
         /// <summary>
+        /// HyperLink4 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink4;
+
+        /// <summary>
+        /// HyperLink3 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink3;
+
+        /// <summary>
+        /// HyperLink2 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink2;
+
+        /// <summary>
+        /// HyperLink6 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink6;
+
+        /// <summary>
+        /// HyperLink5 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink5;
+
+        /// <summary>
+        /// HyperLink1 控制項。
+        /// </summary>
+        /// <remarks>
+        /// 自動產生的欄位。
+        /// 若要修改，請將欄位宣告從設計工具檔案移到程式碼後置檔案。
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HyperLink HyperLink1;
+
+        /// <summary>
         /// Label1 控制項。
         /// </summary>
         /// <remarks>

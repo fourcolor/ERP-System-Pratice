@@ -37,10 +37,43 @@
              height: 20px;
          }
      </style>
+        <style type="text/css">
+        #form1 {
+            font-weight: 700;
+        }
+        .auto-style1 {
+            background-color:lightgreen;
+            width: 100%;
+        }
+        .auto-style20 {
+            width: 80px;
+        }
+    </style>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
     <form id="form1" runat="server">
+         <table class="auto-style1">
+            <tr>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Page/insert.aspx">訂單新增</asp:HyperLink>
+            </td>
+            <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Page/edit.aspx">訂單修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Page/addtion.aspx">追加訂單</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Page/insertReceipt.aspx">收貨新增</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Page/Shipment.aspx">出貨修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Page/inquireOrder.aspx">訂單查詢</asp:HyperLink>
+            </td>
+            </tr>
+        </table>
         <div>
             <asp:Label ID="Label1" runat="server" Text="客戶ID"></asp:Label>
             <asp:TextBox ID="guestIDt" runat="server" OnTextChanged="guestID_TextChanged" AutoPostBack="True"></asp:TextBox>

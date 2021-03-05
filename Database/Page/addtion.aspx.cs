@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database.AccessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -347,6 +348,38 @@ namespace Database.Page
                     GridView1.DataBind();
                     GridView1.Rows[0].Visible = false;
                 }
+            }
+        }
+
+        protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = (((DropDownList)sender).NamingContainer as GridViewRow).RowIndex;
+            insertModeDetailAccessLayer.adddetails[index].productType = ((DropDownList)sender).SelectedValue;
+            GridView1.DataBind();
+        }
+
+        protected void DropDownList3_Load(object sender, EventArgs e)
+        {
+            DropDownList dropDownList = sender as DropDownList;
+            productTypeAccessLayer producttype = new productTypeAccessLayer();
+            List<string> vs = producttype.getProductType();
+            dropDownList.Items.Add("");
+            foreach (var i in vs)
+            {
+                dropDownList.Items.Add(i);
+            }
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            productTypeAccessLayer producttype = new productTypeAccessLayer();
+            List<string> vs = producttype.getProductType();
+            // Instead of string array it could be your data retrieved from database.
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DropDownList ddl = (DropDownList)e.Row.FindControl("tproductType");
+                foreach (string colName in vs)
+                    ddl.Items.Add(new ListItem(colName));
             }
         }
     }

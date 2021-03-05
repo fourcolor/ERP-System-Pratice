@@ -22,10 +22,50 @@
             }
         }
         </script>
+        <style type="text/css">
+        #form1 {
+            font-weight: 700;
+        }
+        .auto-style1 {
+            width:100%;
+            background-color:lightgreen;
+            height: 18px;
+        }
+        .auto-style2 {
+            width: 80px;
+           
+            height: 20px;
+        }
+        .auto-style3 {
+            color:deepskyblue;
+        }
+    </style>
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
+        <div >
+        <table class="auto-style1">
+            <tr>
+                <td class="auto-style2">
+                    <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Page/insert.aspx">訂單插入</asp:HyperLink>
+                </td>
+                <td class="auto-style2">
+                    <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Page/edit.aspx">訂單修改</asp:HyperLink>
+                </td>
+                <td class="auto-style2">
+                    <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Page/insertReceipt.aspx">收貨新增</asp:HyperLink>
+                </td>
+                <td class="auto-style2">
+                    <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Page/editReceipt.aspx">收貨修改</asp:HyperLink>
+                </td>
+                <td class="auto-style2">
+                    <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Page/Shipment.aspx">出貨新增</asp:HyperLink>
+                </td>
+                <td class="auto-style2">
+                    <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Page/inquireOrder.aspx">訂單搜尋</asp:HyperLink>
+                </td>
+            </tr>
+        </table>
         <br />
         <asp:Label ID="Label1" runat="server" Text="客戶名稱:"></asp:Label>
         <asp:TextBox ID="guestIDBox" runat="server"></asp:TextBox>
@@ -61,7 +101,7 @@
         </asp:GridView>
         <br />
         </div>
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" ShowFooter="True" AllowPaging="True" ShowHeaderWhenEmpty="True" DataKeyNames="productID,productType,price,DeliveryDate,colorNum,color,size,amount,brand,shipment,unshipment,remark" OnDataBound="GridView1_DataBound">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" ShowFooter="True" AllowPaging="True" ShowHeaderWhenEmpty="True" DataKeyNames="productID,productType,price,DeliveryDate,colorNum,color,size,amount,brand,shipment,unshipment,remark" OnDataBound="GridView1_DataBound" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
                 <asp:TemplateField HeaderText="商品編號" SortExpression="productID">
                     <EditItemTemplate>
@@ -79,10 +119,12 @@
                         <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("productType") %>' Width="100px"></asp:TextBox>
                     </EditItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="productTypeBox" runat="server" Width="100px" Text =""></asp:TextBox>
+                        <asp:DropDownList ID="productTypeBox" class="user" Width="100px" runat="server" OnLoad="DropDownList3_Load" AutoPostBack="True">
+                        </asp:DropDownList>
                     </FooterTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="tproductType" AutoPostBack="True" OnTextChanged="TextBox15_TextChanged" runat="server" Text='<%# Bind("productType") %>' Width="100px"></asp:TextBox>
+                       <asp:DropDownList ID="tproductType" class="user"  Width="100px" runat="server" OnLoad="DropDownList3_Load"  OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" SelectedValue='<%# Bind("productType") %>' AutoPostBack="True" AppendDataBoundItems="True">
+                        </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="上代" SortExpression="price">

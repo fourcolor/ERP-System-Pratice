@@ -155,11 +155,12 @@ namespace Database
         protected void Button3_Click(object sender, EventArgs e)
         {
             GridViewRow gridViewRow = GridView1.SelectedRow;
+            string[] vs = ((DropDownList)GridView2.FooterRow.FindControl("DropDownList2")).SelectedValue.Split(' ');
             string orderID = gridViewRow.Cells[1].Text;
             string ser = (GridView2.Rows.Count + 1).ToString();
             sqlConn sqlConn = new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");
             string productID = ((TextBox)GridView2.FooterRow.FindControl("productIDFooter")).Text;
-            string productType = ((TextBox)GridView2.FooterRow.FindControl("productTypeFooter")).Text;
+            string productType = vs[1];
             string jprice = ((TextBox)GridView2.FooterRow.FindControl("jpriceFooter")).Text;
             string DeliveryDate = ((TextBox)GridView2.FooterRow.FindControl("DeliveryDateFooter")).Text;
             string colornum = ((TextBox)GridView2.FooterRow.FindControl("colornumFooter")).Text;
@@ -253,6 +254,67 @@ namespace Database
             {
                 Response.Write("<script>alert('上代格式錯誤');</script>");
                 e.Cancel = true;
+            }
+        }
+
+        protected void DropDownList2_Load(object sender, EventArgs e)
+        {
+            DropDownList dropDownList = sender as DropDownList;
+            productTypeAccessLayer producttype = new productTypeAccessLayer();
+            List<string> vs = producttype.getProductType();
+            dropDownList.Items.Add("");
+            foreach (var i in vs)
+            {
+                dropDownList.Items.Add(i);
+            }
+        }
+
+
+        protected void tproductType_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DropDownList dropDownList = (DropDownList)sender;
+            int index = (dropDownList.NamingContainer as GridViewRow).RowIndex;
+            string[] vs = dropDownList.SelectedValue.Split(' ');
+            (GridView2.Rows[index].FindControl("TextBox2") as TextBox).Text = vs[1];
+        }
+
+        protected void tproductType_DataBound(object sender, EventArgs e)
+        {
+            DropDownList dropDownList = sender as DropDownList;
+            int index = (dropDownList.NamingContainer as GridViewRow).RowIndex;
+            productTypeAccessLayer producttype = new productTypeAccessLayer();
+            List<string> vs = producttype.getProductType();
+            foreach (var i in vs)
+            {
+                dropDownList.Items.Add(i);
+            }
+
+        }
+
+        protected void GridView2_RowDataBound1(object sender, GridViewRowEventArgs e)
+        {
+            productTypeAccessLayer producttype = new productTypeAccessLayer();
+            List<string> vs = producttype.getProductType();
+            // Instead of string array it could be your data retrieved from database.
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                if ((e.Row.RowState & DataControlRowState.Edit) > 0)
+                {
+                    // find gender list from dropdownlist which is inside EditTemplate
+                    DropDownList ddl = (DropDownList)e.Row.FindControl("tproductType");
+                    foreach (string colName in vs)
+                    {
+                        ddl.Items.Add(new ListItem(colName));
+                    }
+                    foreach (ListItem listItem in ddl.Items)
+                    {
+                        if (listItem.Value.Contains((e.Row.FindControl("TextBox2") as TextBox).Text))
+                        {
+                            ddl.Items.FindByValue(listItem.Value).Selected = true;
+                            break;
+                        }
+                    }
+                }
             }
         }
     }

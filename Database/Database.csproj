@@ -219,6 +219,7 @@
   <ItemGroup>
     <Compile Include="AccessLayer\accessInquireLayer.cs" />
     <Compile Include="AccessLayer\guestAccessLayer.cs" />
+    <Compile Include="AccessLayer\productType.cs" />
     <Compile Include="AccessLayer\shipment.cs" />
     <Compile Include="Foolproof\Foolproof.cs" />
     <Compile Include="AccessLayer\shipmentAccessLayer.cs" />

@@ -6,7 +6,32 @@
 <head runat="server">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title></title>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>
+    <link rel="Stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            $user = $("[class$='user']");
+            $user.select2({
+                //maximumSelectionLength: 1,
+                language: 'zh-TW',
+                width: '100%',
+                type: "POST",
+                // 最多字元限制
+                maximumInputLength: 10,
+                // 最少字元才觸發尋找, 0 不指定
+                minimumInputLength: 0,
+                // 當找不到可以使用輸入的文字
+                // tags: true,
+                placeholder: '請輸入名稱...',
+                // AJAX 相關操作
 
+            });
+            //$user.val(null).trigger('change');
+        });
+    </script>
         <script type = "text/javascript">
             function footerConfirm() {
                 var confirm_value = document.createElement("INPUT");
@@ -36,11 +61,45 @@
                 document.forms[0].appendChild(confirm_value);
             }
         </script>
+    <style type="text/css">
+        #form1 {
+            font-weight: 700;
+        }
+        .auto-style1 {
+            background-color:lightgreen;
+            width: 100%;
+        }
+        .auto-style20 {
+            width: 80px;
+        }
+    </style>
 </head>
 
 <body>
     <form id="form1" runat="server">
         <div>
+        <table class="auto-style1">
+            <tr>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Page/addtion.aspx">追加訂單</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Page/edit.aspx">訂單修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Page/insertReceipt.aspx">收貨新增</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Page/editReceipt.aspx">收貨修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Page/Shipment.aspx">出貨修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+            <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Page/inquireOrder.aspx">訂單查詢</asp:HyperLink>
+            </td>
+            </tr>
+        </table>
         </div>
         <br />
         <asp:Label ID="Label1" runat="server" Text="客戶名稱:"></asp:Label>
@@ -76,7 +135,7 @@
             </Columns>
         </asp:GridView>
         <br />
-        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" ShowFooter="True" AllowPaging="True" ShowHeaderWhenEmpty="True" DataKeyNames="productID,productType,price,DeliveryDate,colorNum,color,size,amount,brand,shipment,unshipment,remark" OnDataBound="GridView1_DataBound">
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1" ShowFooter="True" AllowPaging="True" ShowHeaderWhenEmpty="True" DataKeyNames="productID,productType,price,DeliveryDate,colorNum,color,size,amount,brand,shipment,unshipment,remark" OnDataBound="GridView1_DataBound" OnRowDataBound="GridView1_RowDataBound">
             <Columns>
                 <asp:TemplateField HeaderText="商品編號" SortExpression="productID">
                     <EditItemTemplate>
@@ -94,10 +153,12 @@
                         <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("productType") %>' Width="100px"></asp:TextBox>
                     </EditItemTemplate>
                     <FooterTemplate>
-                        <asp:TextBox ID="productTypeBox" runat="server" Width="100px" Text =""></asp:TextBox>
+                        <asp:DropDownList ID="productTypeBox" class="user" Width="100px" runat="server" OnLoad="DropDownList3_Load" AutoPostBack="True">
+                        </asp:DropDownList>
                     </FooterTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="tproductType" AutoPostBack="True" OnTextChanged="TextBox15_TextChanged" runat="server" Text='<%# Bind("productType") %>' Width="100px"></asp:TextBox>
+                        <asp:DropDownList ID="tproductType" class="user"  Width="100px" runat="server" OnLoad="DropDownList3_Load"  OnSelectedIndexChanged="DropDownList3_SelectedIndexChanged" SelectedValue='<%# Bind("productType") %>' AutoPostBack="True" AppendDataBoundItems="True">
+                        </asp:DropDownList>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="上代" SortExpression="price">

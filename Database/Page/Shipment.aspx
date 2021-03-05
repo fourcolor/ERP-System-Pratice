@@ -10,11 +10,42 @@
         .auto-style1 {
             width: 75px;
         }
+        .auto-style19 {
+            width:100%;
+            height: 18px;
+        }
+        .auto-style20 {
+            background-color:lightgreen;
+            width: 80px;
+            height: 20px;
+        }
     </style>
 </head>
 <body>
     <form id="form1" runat="server">
         <div>
+                    <table class="auto-style19">
+        <tr>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink1" runat="server" NavigateUrl="~/Page/insert.aspx">訂單新增</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink2" runat="server" NavigateUrl="~/Page/addtion.aspx">追加訂單</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink5" runat="server" NavigateUrl="~/Page/edit.aspx">訂單修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Page/insertReceipt.aspx">收貨新增</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink4" runat="server" NavigateUrl="~/Page/editReceipt.aspx">收貨修改</asp:HyperLink>
+            </td>
+            <td class="auto-style20">
+                <asp:HyperLink ID="HyperLink3" runat="server" NavigateUrl="~/Page/inquireOrder.aspx">訂單查詢</asp:HyperLink>
+            </td>
+        </tr>
+        </table>
             <asp:Label ID="Label1" runat="server" Text="客戶ID"></asp:Label>
             <asp:TextBox ID="guestID" runat="server"></asp:TextBox>
             <asp:ImageButton ID="ImageButton1" ImageUrl="~/pic/search.png"  AlternateText="No Image available" OnClick="findguest" runat="server" Height="16px" Width="16px" /> 

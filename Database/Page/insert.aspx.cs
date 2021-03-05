@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Database.AccessLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -12,8 +13,10 @@ namespace Database
         static int status = 0;
         protected void Page_Load(object sender, EventArgs e)
         {
-            GridView1.Rows[0].Visible = false;
-            GridView1.FooterRow.FindControl("productIDBox").Focus();
+            if(IsPostBack)
+            {
+                GridView1.FooterRow.FindControl("productIDBox").Focus();
+            }
         }
 
 
@@ -29,7 +32,7 @@ namespace Database
                 detail.colorNum = ((TextBox)GridView1.FooterRow.FindControl("colorNumBox")).Text;
                 detail.price = ((TextBox)GridView1.FooterRow.FindControl("priceBox")).Text;
                 detail.productID = ((TextBox)GridView1.FooterRow.FindControl("productIDBox")).Text;
-                detail.productType = ((TextBox)GridView1.FooterRow.FindControl("productTypeBox")).Text;
+                detail.productType = ((DropDownList)GridView1.FooterRow.FindControl("productTypeBox")).Text;
                 detail.remark = ((TextBox)GridView1.FooterRow.FindControl("remarkBox")).Text;
                 detail.shipment = ((TextBox)GridView1.FooterRow.FindControl("shipmentBox")).Text;
                 detail.size = ((TextBox)GridView1.FooterRow.FindControl("sizeBox")).Text;
@@ -133,12 +136,13 @@ namespace Database
                     string orderID = sqlConn.SelectCommand(com).Tables[0].Rows[0][0].ToString();
                     foreach (var i in insertModeDetailAccessLayer.details)
                     {
+                        string[] vs = i.productType.Split(' ');
                         com = "INSERT INTO `data`.`orderdetail` (`訂單編號`,`流水號`, `品番`, `商品類別`, `上代`, `納期`, `色番`, `ｶﾗｰ`, `ｻｲｽﾞ`, `訂貨数量`, `品牌`, `出貨數量`, `未出數量`, `建檔人`, `建檔日`,`結單`,`缺貨`, `備註`) " +
                             "VALUES ("
                              + orderID + ", "
                              + num + ", "
                              + i.productID + ", " +
-                            "'" + i.productType + "', "
+                            "'" + vs[1] + "', "
                              + i.price + ", " +
                             "'" + i.DeliveryDate + "', "
                              + i.colorNum + ", " +
@@ -174,7 +178,7 @@ namespace Database
             insertModeDetailAccessLayer.details[index].colorNum = ((TextBox)GridView1.Rows[index].FindControl("tcolorNum")).Text;
             insertModeDetailAccessLayer.details[index].price = ((TextBox)GridView1.Rows[index].FindControl("tprice")).Text;
             insertModeDetailAccessLayer.details[index].productID = ((TextBox)GridView1.Rows[index].FindControl("tproductID")).Text;
-            insertModeDetailAccessLayer.details[index].productType = ((TextBox)GridView1.Rows[index].FindControl("tproductType")).Text;
+            ((DropDownList)GridView1.Rows[index].FindControl("tproductType")).Items.FindByValue(insertModeDetailAccessLayer.details[index].productType).Selected = true;
             insertModeDetailAccessLayer.details[index].remark = ((TextBox)GridView1.Rows[index].FindControl("tremark")).Text;
             insertModeDetailAccessLayer.details[index].shipment = ((TextBox)GridView1.Rows[index].FindControl("tshipment")).Text;
             insertModeDetailAccessLayer.details[index].size = ((TextBox)GridView1.Rows[index].FindControl("tsize")).Text;
@@ -190,6 +194,7 @@ namespace Database
         protected void GridView1_DataBound(object sender, EventArgs e)
         {
             GridView1.Rows[0].Visible = false;
+
         }
 
 
@@ -302,5 +307,36 @@ namespace Database
             ((TextBox)GridView1.Rows[index].FindControl("tDeliveryDate")).Text = calendar.SelectedDate.ToString("yyyy/MM/dd");
         }
 
+        protected void DropDownList3_Load(object sender, EventArgs e)
+        {
+            DropDownList dropDownList = sender as DropDownList;
+            productTypeAccessLayer producttype = new productTypeAccessLayer();
+            List<string> vs = producttype.getProductType();
+            dropDownList.Items.Add("");
+            foreach(var i in vs)
+            {
+                dropDownList.Items.Add(i);
+            }
+        }
+
+        protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = (((DropDownList)sender).NamingContainer as GridViewRow).RowIndex;
+            insertModeDetailAccessLayer.details[index].productType = ((DropDownList)sender).SelectedValue;
+            GridView1.DataBind();
+        }
+
+        protected void GridView1_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            productTypeAccessLayer producttype = new productTypeAccessLayer();
+            List<string> vs = producttype.getProductType();
+            // Instead of string array it could be your data retrieved from database.
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                DropDownList ddl = (DropDownList)e.Row.FindControl("tproductType");
+                foreach (string colName in vs)
+                    ddl.Items.Add(new ListItem(colName));
+            }
+        }
     }
 }
