@@ -85,10 +85,6 @@ namespace Database
         }
 
 
-        void findguestName(string ID)
-        {
-            string scmd = "";
-        }
 
         public string findTotalprice(int orderID)
         {

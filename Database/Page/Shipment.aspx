@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Shipment.aspx.cs" Inherits="Database.Shipment" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" EnableEventValidation = "false" CodeBehind="Shipment.aspx.cs" Inherits="Database.Shipment" %>
 
 <!DOCTYPE html>
 
@@ -71,7 +71,7 @@
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSource3" runat="server" SelectMethod="getguest" TypeName="Database.AccessLayer.guestAccessLayer"></asp:ObjectDataSource>
         <br />
-        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="Button" />
+        <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="搜尋" />
         <br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1">
             <Columns>
@@ -153,7 +153,7 @@
                 <asp:Parameter DefaultValue="false" Name="o" Type="Boolean" />
             </SelectParameters>
         </asp:ObjectDataSource>
-        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" Width="796px" Visible="False">
+        <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" Width="796px">
             <Columns>
                 <asp:BoundField DataField="brand" HeaderText="brand" SortExpression="brand" ItemStyle-Width="75px" >
 <ItemStyle Width="75px"></ItemStyle>
@@ -212,6 +212,7 @@
                 <asp:Parameter DefaultValue="True" Name="o" Type="Boolean" />
             </SelectParameters>
         </asp:ObjectDataSource>
+        <asp:Button ID="Button2" runat="server" OnClick="Button2_Click" Text="匯出pdf" />
     </form>
 </body>
 </html>

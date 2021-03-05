@@ -1,9 +1,14 @@
-﻿using System;
+﻿using iTextSharp.text.pdf;
+using iTextSharp.text.html.simpleparser;
+using iTextSharp.text.html;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.IO;
 
 namespace Database
 {
@@ -134,6 +139,39 @@ namespace Database
                     }
                 }
             }
+        }
+
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            string FilePath = MapPath("~/File/MyReport.pdf");
+
+            iTextSharp.text.Document pdfDoc = new iTextSharp.text.Document(iTextSharp.text.PageSize.A4, 20f, 20f, 20f, 20f);
+            PdfWriter.GetInstance(pdfDoc, new FileStream(FilePath, FileMode.Create));
+            StringWriter sw = new StringWriter();
+            HtmlTextWriter hw = new HtmlTextWriter(sw);
+
+            GridView1.AllowPaging = false;
+            GridView1.HeaderRow.Cells[1].Text = "Message";
+            GridView1.HeaderRow.Font.Bold = true;
+            GridView1.RenderControl(hw);
+
+            StringReader sr = new StringReader(sw.ToString());
+            HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
+            PdfWriter.GetInstance(pdfDoc, Response.OutputStream);
+            pdfDoc.Open();
+            htmlparser.Parse(sr);
+            pdfDoc.Close();
+
+            Response.Write(pdfDoc);
+
+            Response.ContentType = "Application/pdf";
+            Response.WriteFile(FilePath);
+            Response.End();
+
+        }
+        public override void VerifyRenderingInServerForm(Control control)
+        {
+            //處理'GridView' 的控制項 'GridView' 必須置於有 runat=server 的表單標記之中
         }
     }
 }

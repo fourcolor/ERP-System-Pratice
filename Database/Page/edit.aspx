@@ -20,6 +20,32 @@
             height: 20px;
         }
     </style>
+            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.22/jquery-ui.js"></script>
+    <link rel="Stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.8.10/themes/redmond/jquery-ui.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script>
+        $(function () {
+            $user = $("[class$='user']");
+            $user.select2({
+                //maximumSelectionLength: 1,
+                language: 'zh-TW',
+                width: '100%',
+                type: "POST",
+                // 最多字元限制
+                maximumInputLength: 10,
+                // 最少字元才觸發尋找, 0 不指定
+                minimumInputLength: 0,
+                // 當找不到可以使用輸入的文字
+                // tags: true,
+                placeholder: '請輸入名稱...',
+                // AJAX 相關操作
+
+            });
+            //$user.val(null).trigger('change');
+        });
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -139,11 +165,11 @@
                 <asp:TemplateField HeaderText="商品類別" SortExpression="productType">
                     <EditItemTemplate>
                         <asp:TextBox ID="TextBox2" runat="server" Text='<%# Bind("productType") %>' Width="75px" Visible="False"></asp:TextBox>
-                        <asp:DropDownList ID="tproductType" runat="server" AutoPostBack="True" OnDataBound="tproductType_DataBound" OnSelectedIndexChanged="tproductType_SelectedIndexChanged">
+                        <asp:DropDownList ID="tproductType" Class="user" runat="server" AutoPostBack="True" OnDataBound="tproductType_DataBound" OnSelectedIndexChanged="tproductType_SelectedIndexChanged">
                         </asp:DropDownList>
                     </EditItemTemplate>
                     <FooterTemplate>
-                        <asp:DropDownList ID="DropDownList2" runat="server" OnDataBound="tproductType_DataBound">
+                        <asp:DropDownList ID="DropDownList2" Class="user" runat="server" OnDataBound="tproductType_DataBound">
                         </asp:DropDownList>
                     </FooterTemplate>
                     <ItemTemplate>

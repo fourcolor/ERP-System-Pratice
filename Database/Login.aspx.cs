@@ -20,7 +20,6 @@ namespace WebApplication1
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            DataSet dataSet;
             int count;
             sqlConn sqlConn = new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");
             MySqlCommand cmd = new MySqlCommand("SELECT Count(1) FROM data.useraddress where userName=@user and passward=@password;", sqlConn.conn);
