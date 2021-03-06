@@ -29,10 +29,12 @@ namespace Database.AccessLayer
         public string jprice { get; set; }
         public string colornum { get; set; }
         public string color { get; set; }
-        public string size {get;set;}
+        public string size { get; set; }
         public string amount { get; set; }
         public string tprice { get; set; }
         public string remark { get; set; }
+        public bool showtprice { get; set; }
+        public bool showremark { get; set; }
     }
 
 }

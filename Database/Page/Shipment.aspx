@@ -73,9 +73,11 @@
         <br />
         <asp:Button ID="Button1" runat="server" OnClick="Button1_Click" Text="搜尋" />
         <br />
+        <br />
+        出貨<br />
         <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource1">
             <Columns>
-                <asp:BoundField DataField="brand" HeaderText="brand" SortExpression="brand" ItemStyle-Width="75px" >
+                <asp:BoundField DataField="brand" HeaderText="品牌" SortExpression="brand" ItemStyle-Width="75px" >
 <ItemStyle Width="75px"></ItemStyle>
                 </asp:BoundField>
                 <asp:TemplateField>
@@ -146,7 +148,8 @@
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
-        <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="getships" TypeName="Database.shipmentAccessLayer">
+        <br />
+        缺貨<asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="getships" TypeName="Database.shipmentAccessLayer">
             <SelectParameters>
                 <asp:ControlParameter ControlID="guestID" DefaultValue="" Name="guestID" PropertyName="Text" Type="String" />
                 <asp:ControlParameter ControlID="shippedDate" DefaultValue="" Name="shipmentDate" PropertyName="Text" Type="String" />
@@ -155,7 +158,7 @@
         </asp:ObjectDataSource>
         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="False" DataSourceID="ObjectDataSource2" Width="796px">
             <Columns>
-                <asp:BoundField DataField="brand" HeaderText="brand" SortExpression="brand" ItemStyle-Width="75px" >
+                <asp:BoundField DataField="brand" HeaderText="品牌" SortExpression="brand" ItemStyle-Width="75px" >
 <ItemStyle Width="75px"></ItemStyle>
                 </asp:BoundField>
                 <asp:TemplateField>

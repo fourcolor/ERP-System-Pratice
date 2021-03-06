@@ -9,6 +9,8 @@ namespace Database
 {
     public class shipmentAccessLayer
     {
+        public static List<shipment> shipments = new List<shipment>();
+        public static List<shipment> unshipments = new List<shipment>();
         public static string shipmentStr = "" +
             "SELECT orderdetail.品牌,recieptdetail.其他 " +
             "FROM data.orderdetail " +
@@ -29,14 +31,13 @@ namespace Database
         public static string shipmentdetailGroup = "group by 品番,其他 order by 品牌 DEsc";
         public static List<shipment> getships(string guestID, string shipmentDate,bool o)
         {
-            List<shipment> shipments = new List<shipment>();
             DataSet dataSet;
             sqlConn sqlConn = new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");
             if(guestID != null && guestID !="" && shipmentDate != null && shipmentDate !="")
             {
                 if(o)
                 {
-                    shipmentCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 != 'Y' or recieptdetail.訂單編號 is null ) ";
+                    shipmentCond = " where (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "') and (orderdetail.缺貨 = 'Y' or recieptdetail.訂單編號 is null ) ";
                 }
                 else
                 {
@@ -63,9 +64,23 @@ namespace Database
                 {
                     shipment.o = false;
                 }
-                shipments.Add(shipment);
+                if(o)
+                {
+                    unshipments.Add(shipment);
+                }
+                else
+                {
+                    shipments.Add(shipment);
+                }
             }
-            return shipments;
+            if (o)
+            {
+                return unshipments;
+            }
+            else
+            {
+                return shipments;
+            }
         }
 
         public static List<shipmentdetail> getShipmentdetails(string brand, string guestID, string shipmentDate,bool o,string other)
@@ -91,7 +106,7 @@ namespace Database
                 {
                     if (o)
                     {
-                        shipmentdetailCond = " where  (data.receipt.客戶ID = " + guestID + " and recieptdetail.出貨日 = '" + shipmentDate + "' and recieptdetail.其他 = '" + other + "') ";
+                        return shipmentdetails;
                         //(data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and orderdetail.缺貨 != 'Y' and orderdetail.品牌='') || (data.receipt.客戶ID = 1 and recieptdetail.出貨日 = '2021/03/05' and recieptdetail.其他 = '車資' )
                     }
                     else
@@ -131,6 +146,8 @@ namespace Database
                 shipmentdetail.size = i["ｻｲｽﾞ"].ToString();
                 shipmentdetail.colornum = i["色番"].ToString();
                 shipmentdetail.remark = i["備註"].ToString();
+                shipmentdetail.showtprice = true;
+                shipmentdetail.showremark = true;
                 shipmentdetails.Add(shipmentdetail);
             }
             return shipmentdetails;
