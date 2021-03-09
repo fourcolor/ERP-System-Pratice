@@ -107,7 +107,7 @@
     </table>
     </div>
     <form id="form1" runat="server" class="auto-style8">
-        <asp:RadioButtonList ID="RadioButtonList1" runat="server">
+        <asp:RadioButtonList ID="RadioButtonList1" runat="server" OnSelectedIndexChanged="RadioButtonList1_SelectedIndexChanged" AutoPostBack="True">
             <asp:ListItem>以訂單查詢</asp:ListItem>
             <asp:ListItem>以收貨單查詢</asp:ListItem>
         </asp:RadioButtonList>
@@ -217,6 +217,9 @@
         <br />
         <asp:Button ID="Button1" runat="server" Text="搜尋" OnClick="Button1_Click" />
         <br />
+        <br />
+        訂單編號<br />
+        <br />
         <asp:GridView ID="GridView1" runat="server" DataSourceID="ObjectDataSource1" AllowPaging="True" Width="1228px" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
@@ -225,10 +228,18 @@
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSource1" runat="server" SelectMethod="getInquireData" TypeName="Database.accessInquireLayse"></asp:ObjectDataSource>
         <br />
-        <asp:GridView ID="GridView2" runat="server" DataSourceID="ObjectDataSource2" AllowPaging="True" Width="1104px">
+        收貨編號<br />
+        <br />
+        <asp:GridView ID="GridView2" runat="server" DataSourceID="ObjectDataSource2" AllowPaging="True" Width="1104px" OnSelectedIndexChanged="GridView2_SelectedIndexChanged">
+            <Columns>
+                <asp:CommandField ShowSelectButton="True"></asp:CommandField>
+            </Columns>
         </asp:GridView>
         <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" SelectMethod="getinquire" TypeName="Database.ReceiptDetailAccessLayer">
         </asp:ObjectDataSource>
+        <asp:GridView ID="GridView4" runat="server" AllowPaging="True" Width="1104px" DataSourceID="ObjectDataSource4">
+        </asp:GridView>
+        <asp:ObjectDataSource ID="ObjectDataSource4" runat="server" SelectMethod="getinquire2" TypeName="Database.ReceiptDetailAccessLayer"></asp:ObjectDataSource>
     </form>
 </body>
 </html>

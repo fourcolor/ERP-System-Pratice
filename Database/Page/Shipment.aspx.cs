@@ -189,6 +189,10 @@ public partial class Shipment : System.Web.UI.Page
                 PdfPTable table1 = new PdfPTable(new float[] { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
                 table1.TotalWidth = 500f;
                 table1.LockedWidth = true;
+                PdfPTable table2 = new PdfPTable(new float[] { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
+                table2.TotalWidth = 500f;
+                table2.LockedWidth = true;
+                document.Add(new Paragraph(12f, "已出貨", font));
                 foreach (var i in head)
                 {
                     PdfPCell cell = new PdfPCell(new Phrase(i, font));
@@ -257,7 +261,77 @@ public partial class Shipment : System.Web.UI.Page
                         table1.AddCell(pCell);
                     }
                 }
+                document.Add(new Paragraph(12f, "未出貨", font));
+                foreach (var i in head)
+                {
+                    PdfPCell cell = new PdfPCell(new Phrase(i, font));
+                    table1.AddCell(cell);
+                }
+                foreach (var i in shipmentAccessLayer.unshipments)
+                {
+                    if (i.brand != "")
+                    {
+                        int h = i.content.Count;
+                        PdfPCell pdfP = new PdfPCell(new Phrase(i.brand, font));
+                        pdfP.Colspan = 1;
+                        pdfP.Rowspan = h;
+                        table2.AddCell(pdfP);
+                    }
+                    else
+                    {
+                        int h = i.content.Count;
+                        PdfPCell pdfP = new PdfPCell(new Phrase(i.other, font));
+                        pdfP.Colspan = 1;
+                        pdfP.Rowspan = h;
+                        table2.AddCell(pdfP);
+                    }
+                    foreach (var j in i.content)
+                    {
+                        PdfPCell pCell = new PdfPCell(new Phrase(j.productID, font));
+                        pCell.Colspan = 1;
+                        table2.AddCell(pCell);
+                        pCell = new PdfPCell(new Phrase(j.producttype, font));
+                        pCell.Colspan = 1;
+                        table2.AddCell(pCell);
+                        pCell = new PdfPCell(new Phrase(j.jprice, font));
+                        pCell.Colspan = 1;
+                        table2.AddCell(pCell);
+                        pCell = new PdfPCell(new Phrase(j.colornum, font));
+                        pCell.Colspan = 1;
+                        table2.AddCell(pCell);
+                        pCell = new PdfPCell(new Phrase(j.color, font));
+                        pCell.Colspan = 1;
+                        table2.AddCell(pCell);
+                        pCell = new PdfPCell(new Phrase(j.size, font));
+                        pCell.Colspan = 1;
+                        table2.AddCell(pCell);
+                        pCell = new PdfPCell(new Phrase(j.amount, font));
+                        pCell.Colspan = 1;
+                        table2.AddCell(pCell);
+                        if (j.showtprice)
+                        {
+                            pCell = new PdfPCell(new Phrase(j.tprice, font));
+                        }
+                        else
+                        {
+                            pCell = new PdfPCell(new Phrase("", font));
+                        }
+                        pCell.Colspan = 1;
+                        table1.AddCell(pCell);
+                        if (j.showremark)
+                        {
+                            pCell = new PdfPCell(new Phrase(j.remark, font));
+                        }
+                        else
+                        {
+                            pCell = new PdfPCell(new Phrase("", font));
+                        }
+                        pCell.Colspan = 1;
+                        table1.AddCell(pCell);
+                    }
+                }
                 document.Add(table1);
+                document.Add(table2);
                 document.Close();
                 Response.Clear();
                 Response.AddHeader("Content-Dispostition", "attachment;filename=pdfExample.pdf");

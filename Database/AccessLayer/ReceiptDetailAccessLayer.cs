@@ -138,6 +138,15 @@ namespace Database
             }
             return dataSet;
         }
+
+        public static string inquire2cond = "where 1=1";
+        public static DataSet getinquire2()
+        {
+            sqlConn sqlConn = new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");
+            DataSet dataSet;
+            dataSet = sqlConn.SelectCommand("SELECT * FROM data.recieptdetail left join data.receipt on receipt.receiptID = recieptdetail.收貨編號 " + inquire2cond + ";");
+            return dataSet;
+        }
         public static void deleteRecieptDetail(string receiptID, string receiptSERIALNUMBER, string orderID, string SERIALNUMBER, string jprice, string amount)
         {
             sqlConn sqlConn = new sqlConn("127.0.0.1", "3306", "root", "a27452840", "data", "utf8");

@@ -16,134 +16,176 @@ namespace Database
         string[] cond = new string[8];
         protected void Page_Load(object sender, EventArgs e)
         {
-            checkBoxes.Add(CheckBox1);
-            checkBoxes.Add(CheckBox2);
-            checkBoxes.Add(CheckBox3);
-            checkBoxes.Add(CheckBox4);
-            checkBoxes.Add(CheckBox5);
-            checkBoxes.Add(CheckBox6);
-            checkBoxes.Add(CheckBox7);
-            checkBoxes.Add(CheckBox8);
+            if (!IsPostBack)
+            {
+                checkBoxes.Add(CheckBox1);
+                checkBoxes.Add(CheckBox2);
+                checkBoxes.Add(CheckBox3);
+                checkBoxes.Add(CheckBox4);
+                checkBoxes.Add(CheckBox5);
+                checkBoxes.Add(CheckBox6);
+                checkBoxes.Add(CheckBox7);
+                checkBoxes.Add(CheckBox8);
+            }
         }
 
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            accessInquireLayse.cond = "where 1=1 ";
-            if (CheckBox1.Checked)
+            if (RadioButtonList1.SelectedIndex == 0)
             {
-                try
+                accessInquireLayse.cond = "where 1=1 ";
+                if (CheckBox1.Checked)
                 {
-                    CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
-                    DateTime d = DateTime.ParseExact(TextBox1.Text, "yyyy/MM/dd", CultureInfoDateCulture);
-                    cond[0] = " and data.order.訂單日期 = '" + TextBox1.Text + "'";
-                }
-                catch
-                {
-                    Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
-                }
-            }
-            else
-            {
-                cond[0] = "";
-            }
-            if (CheckBox2.Checked)
-            {
-                cond[1] = " and data.order.客戶編號 = " + TextBox2.Text;
-            }
-            else
-            {
-                cond[1] = "";
-            }
-            if (CheckBox3.Checked)
-            {
-                cond[2] = " and orderdetail.品牌 = '" + TextBox3.Text + "'";
-            }
-            else
-            {
-                cond[2] = "";
-            }
-            if (CheckBox4.Checked)
-            {
-                cond[3] = " and orderdetail.品牌 = " + TextBox4.Text;
-            }
-            else
-            {
-                cond[3] = "";
-            }
-            if (CheckBox5.Checked)
-            {
-                cond[4] = " and orderdetail.商品類別 = '" + TextBox5.Text + "'";
-            }
-            else
-            {
-                cond[4] = "";
-            }
-            if (CheckBox6.Checked)
-            {
-                try
-                {
-                    CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
-                    DateTime d;
-                    d = DateTime.ParseExact(TextBox6.Text, "yyyy/MM/dd", CultureInfoDateCulture);
-                    cond[5] = " and recieptdetail.出貨日 = '" + TextBox6.Text + "'";
-                }
-                catch
-                {
-                    Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
-                }
-            }
-            else
-            {
-                cond[5] = "";
-            }
-            if (CheckBox7.Checked)
-            {
-                try
-                {
-                    CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
-                    DateTime d;
-                    d = DateTime.ParseExact(TextBox7.Text, "yyyy/MM/dd", CultureInfoDateCulture);
-                    cond[6] = " and receipt.收貨日 = '" + TextBox7.Text + "'";
-                }
-                catch
-                {
-                    Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
-                }
-            }
-            else
-            {
-                cond[6] = "";
-            }
-            if (CheckBox8.Checked)
-            {
-                if (TextBox8.Text != "N" && TextBox8.Text != "Y" && TextBox8.Text != "n" && TextBox8.Text != "y")
-                {
-                    Response.Write("<script>alert('結單只能為Y或N');</script>");
+                    try
+                    {
+                        CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
+                        DateTime d = DateTime.ParseExact(TextBox1.Text, "yyyy/MM/dd", CultureInfoDateCulture);
+                        cond[0] = " and data.order.訂單日期 = '" + TextBox1.Text + "'";
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
+                    }
                 }
                 else
                 {
-                    if (TextBox8.Text == "n")
+                    cond[0] = "";
+                }
+                if (CheckBox2.Checked)
+                {
+                    cond[1] = " and data.order.客戶編號 = " + TextBox2.Text;
+                }
+                else
+                {
+                    cond[1] = "";
+                }
+                if (CheckBox3.Checked)
+                {
+                    cond[2] = " and orderdetail.品牌 = '" + TextBox3.Text + "'";
+                }
+                else
+                {
+                    cond[2] = "";
+                }
+                if (CheckBox4.Checked)
+                {
+                    cond[3] = " and orderdetail.品牌 = " + TextBox4.Text;
+                }
+                else
+                {
+                    cond[3] = "";
+                }
+                if (CheckBox5.Checked)
+                {
+                    cond[4] = " and orderdetail.商品類別 = '" + TextBox5.Text + "'";
+                }
+                else
+                {
+                    cond[4] = "";
+                }
+                if (CheckBox6.Checked)
+                {
+                    try
                     {
-                        TextBox8.Text = "N";
+                        CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
+                        DateTime d;
+                        d = DateTime.ParseExact(TextBox6.Text, "yyyy/MM/dd", CultureInfoDateCulture);
+                        cond[5] = " and recieptdetail.出貨日 = '" + TextBox6.Text + "'";
                     }
-                    if (TextBox8.Text == "y")
+                    catch
                     {
-                        TextBox8.Text = "Y";
+                        Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
                     }
-                    cond[7] = " and orderdetail.結單 = '" + TextBox8.Text + "'";
+                }
+                else
+                {
+                    cond[5] = "";
+                }
+                if (CheckBox7.Checked)
+                {
+                    try
+                    {
+                        CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
+                        DateTime d;
+                        d = DateTime.ParseExact(TextBox7.Text, "yyyy/MM/dd", CultureInfoDateCulture);
+                        cond[6] = " and receipt.收貨日 = '" + TextBox7.Text + "'";
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
+                    }
+                }
+                else
+                {
+                    cond[6] = "";
+                }
+                if (CheckBox8.Checked)
+                {
+                    if (TextBox8.Text != "N" && TextBox8.Text != "Y" && TextBox8.Text != "n" && TextBox8.Text != "y")
+                    {
+                        Response.Write("<script>alert('結單只能為Y或N');</script>");
+                    }
+                    else
+                    {
+                        if (TextBox8.Text == "n")
+                        {
+                            TextBox8.Text = "N";
+                        }
+                        if (TextBox8.Text == "y")
+                        {
+                            TextBox8.Text = "Y";
+                        }
+                        cond[7] = " and orderdetail.結單 = '" + TextBox8.Text + "'";
+                    }
+                }
+                else
+                {
+                    cond[7] = "";
+                }
+                foreach (var i in cond)
+                {
+                    accessInquireLayse.cond += i;
                 }
             }
             else
             {
-                cond[7] = "";
-            }
-            foreach (var i in cond)
-            {
-                accessInquireLayse.cond += i;
+                if(CheckBox2.Checked)
+                {
+                    ReceiptDetailAccessLayer.inquire2cond += " and receipt.客戶ID = '"+ TextBox2.Text + "'";
+                }
+                if (CheckBox6.Checked)
+                {
+                    try
+                    {
+                        CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
+                        DateTime d;
+                        d = DateTime.ParseExact(TextBox6.Text, "yyyy/MM/dd", CultureInfoDateCulture);
+                        ReceiptDetailAccessLayer.inquire2cond += " and receipt.收貨日 = '" + TextBox6.Text + "'";
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
+                    }
+                }
+                if (CheckBox7.Checked)
+                {
+                    try
+                    {
+                        CultureInfo CultureInfoDateCulture = new CultureInfo("ja-JP"); //日期文化格式
+                        DateTime d;
+                        d = DateTime.ParseExact(TextBox7.Text, "yyyy/MM/dd", CultureInfoDateCulture);
+                        ReceiptDetailAccessLayer.inquire2cond += " and receipt.收貨日 = '" + TextBox7.Text + "'";
+                    }
+                    catch
+                    {
+                        Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
+                    }
+                }
             }
             GridView1.DataBind();
             GridView1_SelectedIndexChanged(null, null);
+            ReceiptDetailAccessLayer.inquire2cond = " where 1=1 ";
         }
 
         protected void ImageButton4_Click(object sender, ImageClickEventArgs e)
@@ -248,6 +290,49 @@ namespace Database
                 ReceiptDetailAccessLayer.inorderID = "無";
                 ReceiptDetailAccessLayer.inSERIALNUMBER = "無";
                 GridView2.DataBind();
+            }
+        }
+
+        protected void RadioButtonList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(RadioButtonList1.SelectedIndex == 0)
+            {
+                CheckBox1.Enabled = true;
+                CheckBox2.Enabled = true;
+                CheckBox3.Enabled = true;
+                CheckBox4.Enabled = true;
+                CheckBox5.Enabled = true;
+                CheckBox6.Enabled = true;
+                CheckBox7.Enabled = true;
+                CheckBox8.Enabled = true;
+                GridView1.Visible = true;
+                GridView2.Visible = true;
+            }
+            else
+            {
+                CheckBox1.Enabled = false;
+                CheckBox2.Enabled = true;
+                CheckBox3.Enabled = false;
+                CheckBox4.Enabled = false;
+                CheckBox5.Enabled = false;
+                CheckBox6.Enabled = true;
+                CheckBox7.Enabled = true;
+                CheckBox8.Enabled = false;
+                GridView1.Visible = false;
+                GridView1.Visible = false;
+            }
+        }
+
+        protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                ReceiptDetailAccessLayer.inquire2cond = @"where recieptdetail.收貨編號 like '"+GridView2.SelectedRow.Cells[1].Text+"'";
+                GridView4.DataBind();
+            }
+            catch
+            {
+                ReceiptDetailAccessLayer.inquire2cond = "where 1=1";
             }
         }
     }
