@@ -23,6 +23,7 @@
         <br />
         <asp:HyperLink ID="HyperLink6" runat="server" NavigateUrl="~/Page/inquireOrder.aspx">查詢</asp:HyperLink>
         <br />
+        <asp:Label ID="Label1" runat="server" OnLoad="Label1_Load" Text="Label"></asp:Label>
     </form>
 </body>
 </html>

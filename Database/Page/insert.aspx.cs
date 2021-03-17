@@ -72,18 +72,25 @@ namespace Database
                     Response.Write("<script>alert('訂單日期格式為yyyy/MM/dd')</script>");
                     flag = false;
                 }
-                else if (!Foolproof.DateFoolproof(fileDateBox.Text))
-                {
-                    Response.Write("<script>alert('建檔日期錯誤')</script>");
-                    flag = false;
-                }
                 else
                 {
                     foreach (var i in orderDetails)
                     {
                         if (!Foolproof.DateFoolproof(i.DeliveryDate))
                         {
-                            Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
+                            Response.Write("<script>alert('納品書日日期格式為yyyy/MM/dd');</script>");
+                            flag = false;
+                            break;
+                        }
+                        if (!Foolproof.IntFoolproof(i.productID))
+                        {
+                            Response.Write("<script>alert('商品編號格式錯誤');</script>");
+                            flag = false;
+                            break;
+                        }
+                        if (!Foolproof.IntFoolproof(i.colorNum))
+                        {
+                            Response.Write("<script>alert('色番格式錯誤');</script>");
                             flag = false;
                             break;
                         }
@@ -136,6 +143,8 @@ namespace Database
                     string orderID = sqlConn.SelectCommand(com).Tables[0].Rows[0][0].ToString();
                     foreach (var i in insertModeDetailAccessLayer.details)
                     {
+                        System.DateTime currentTime = new System.DateTime();
+                        currentTime = System.DateTime.Now;
                         string[] vs = i.productType.Split(' ');
                         com = "INSERT INTO `data`.`orderdetail` (`訂單編號`,`流水號`, `品番`, `商品類別`, `上代`, `納期`, `色番`, `ｶﾗｰ`, `ｻｲｽﾞ`, `訂貨数量`, `品牌`, `出貨數量`, `未出數量`, `建檔人`, `建檔日`,`結單`,`缺貨`, `備註`) " +
                             "VALUES ("
@@ -152,8 +161,8 @@ namespace Database
                             "'" + i.brand + "', "
                              + 0 + ", "
                              + i.amount + ", " +
-                            "'" + fileMakerBox.Text + "', " +
-                            "'" + fileDateBox.Text + "', " +
+                            "'" + User.Identity.Name + "', " +
+                            "'" + currentTime.ToString("yyyy/MM/dd") + "', " +
                             "'" + i.statement + "', " +
                             "'" + i.outofstock + "', " +
                             "'" + i.remark + "' " +

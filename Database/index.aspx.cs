@@ -11,6 +11,11 @@ namespace Database
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Label1.Text = User.Identity.Name;
+        }
+
+        protected void Label1_Load(object sender, EventArgs e)
+        {
 
         }
     }

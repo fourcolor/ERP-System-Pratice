@@ -10,9 +10,9 @@
 <body>
     <form id="form1" runat="server">
         <div>
-            帳號<asp:TextBox ID="txtAccount" runat="server"></asp:TextBox>
+            帳號<asp:TextBox ID="txtAccount" runat="server" AutoPostBack="True"></asp:TextBox>
             <br />
-            密碼<asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
+            密碼<asp:TextBox ID="txtPassword" runat="server" AutoPostBack="True"></asp:TextBox>
             <br />
             <asp:CheckBox ID="chkRememberMe" runat="server" />
             <asp:Button ID="btnLogin" runat="server" Text="登入" OnClick="btnLogin_Click" />
