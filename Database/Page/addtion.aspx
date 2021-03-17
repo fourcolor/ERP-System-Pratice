@@ -231,7 +231,7 @@
                         <asp:TextBox ID="shipmentBox" runat="server" Width="100px" Text ="0" OnTextChanged="amountBox_TextChanged" AutoPostBack="True"></asp:TextBox>
                     </FooterTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="tshipment" AutoPostBack="True" OnTextChanged="TextBox15_TextChanged" runat="server" Text='<%# Bind("shipment") %>' Width="100px"></asp:TextBox>
+                        <asp:TextBox ID="tshipment" AutoPostBack="True" OnTextChanged="tshipment_TextChanged" runat="server" Text='<%# Bind("shipment") %>' Width="100px"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="未出數量" SortExpression="unshipment">
@@ -242,7 +242,7 @@
                         <asp:TextBox ID="unshipmentBox" runat="server" Width="100px" Text =""></asp:TextBox>
                     </FooterTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="tunshipment" AutoPostBack="True" OnTextChanged="TextBox15_TextChanged" runat="server" Text='<%# Bind("unshipment") %>' Width="100px"></asp:TextBox>
+                        <asp:TextBox ID="tunshipment" AutoPostBack="True" OnTextChanged="tunshipment_TextChanged" runat="server" Text='<%# Bind("unshipment") %>' Width="100px"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="缺貨" SortExpression="unshipment">

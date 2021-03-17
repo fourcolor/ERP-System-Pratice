@@ -111,11 +111,6 @@
         <br />
         <asp:ObjectDataSource ID="ObjectDataSource2" runat="server" SelectMethod="getguest" TypeName="Database.AccessLayer.guestAccessLayer"></asp:ObjectDataSource>
         <br />
-        <asp:Label ID="Label3" runat="server" Text="建檔人:    "></asp:Label>
-        <asp:TextBox ID="fileMakerBox" runat="server" style="margin-left: 13px"></asp:TextBox>
-        <asp:Label ID="Label4" runat="server" Text="建檔日期:"></asp:Label>
-        <asp:TextBox ID="fileDateBox" runat="server"></asp:TextBox>
-        <asp:ImageButton ID="ImageButton3" ImageUrl="~/pic/calendar.jpg"  AlternateText="No Image available" OnClick="ImageButton3_Click" runat="server" Height="16px" Width="16px" /> 
         <br />
         <asp:Calendar ID="Calendar1" runat="server" OnSelectionChanged="Calendar1_SelectionChanged" Visible="False"></asp:Calendar>
         <br />
@@ -250,7 +245,7 @@
                         <asp:TextBox ID="shipmentBox" runat="server" Width="100px" Text ="0" OnTextChanged="amountBox_TextChanged" AutoPostBack="True"></asp:TextBox>
                     </FooterTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="tshipment" AutoPostBack="True" OnTextChanged="TextBox15_TextChanged" runat="server" Text='<%# Bind("shipment") %>' Width="100px"></asp:TextBox>
+                        <asp:TextBox ID="tshipment" AutoPostBack="True" OnTextChanged="tshipment_TextChanged" runat="server" Text='<%# Bind("shipment") %>' Width="100px"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="未出數量" SortExpression="unshipment">
@@ -261,7 +256,7 @@
                         <asp:TextBox ID="unshipmentBox" runat="server" Width="100px" Text =""></asp:TextBox>
                     </FooterTemplate>
                     <ItemTemplate>
-                        <asp:TextBox ID="tunshipment" AutoPostBack="True" OnTextChanged="TextBox15_TextChanged" runat="server" Text='<%# Bind("unshipment") %>' Width="100px"></asp:TextBox>
+                        <asp:TextBox ID="tunshipment" AutoPostBack="True" OnTextChanged="tunshipment_TextChanged" runat="server" Text='<%# Bind("unshipment") %>' Width="100px"></asp:TextBox>
                     </ItemTemplate>
                 </asp:TemplateField>
                 <asp:TemplateField HeaderText="缺貨" SortExpression="unshipment">

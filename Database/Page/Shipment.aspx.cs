@@ -146,6 +146,7 @@ public partial class Shipment : System.Web.UI.Page
             shipmentAccessLayer.shipments.Clear();
             shipmentAccessLayer.unshipments.Clear();
             shippedDate.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void CheckBox2_CheckedChanged(object sender, EventArgs e)
@@ -179,7 +180,7 @@ public partial class Shipment : System.Web.UI.Page
         {
             try
             {
-                string[] head = { "品牌", "貨號", "'商品類別", "上代稅", "色番", "顏色", "尺寸", "數量", "金額", "備註" };
+                string[] head = { "品牌", "貨號", "商品類別", "上代稅", "色番", "顏色", "尺寸", "數量", "金額", "備註" };
                 Document document = new Document(PageSize.A4, 50, 50, 80, 50);
                 MemoryStream memory = new MemoryStream();
                 PdfWriter pdfWriter = PdfWriter.GetInstance(document, memory);
@@ -192,7 +193,10 @@ public partial class Shipment : System.Web.UI.Page
                 PdfPTable table2 = new PdfPTable(new float[] { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
                 table2.TotalWidth = 500f;
                 table2.LockedWidth = true;
-                document.Add(new Paragraph(12f, "已出貨", font));
+                PdfPCell title = new PdfPCell(new Phrase("出貨", font));
+                title.Colspan = 10;
+                title.Rowspan = 1;
+                table1.AddCell(title);
                 foreach (var i in head)
                 {
                     PdfPCell cell = new PdfPCell(new Phrase(i, font));
@@ -261,11 +265,14 @@ public partial class Shipment : System.Web.UI.Page
                         table1.AddCell(pCell);
                     }
                 }
-                document.Add(new Paragraph(12f, "未出貨", font));
+                title = new PdfPCell(new Phrase("缺貨", font));
+                title.Colspan = 10;
+                title.Rowspan = 1;
+                table2.AddCell(title);
                 foreach (var i in head)
                 {
                     PdfPCell cell = new PdfPCell(new Phrase(i, font));
-                    table1.AddCell(cell);
+                    table2.AddCell(cell);
                 }
                 foreach (var i in shipmentAccessLayer.unshipments)
                 {
@@ -334,6 +341,7 @@ public partial class Shipment : System.Web.UI.Page
                 document.Add(table2);
                 document.Close();
                 Response.Clear();
+                Response.Write("<script>window.open(test.aspx'',''_blank'')</script>");
                 Response.AddHeader("Content-Dispostition", "attachment;filename=pdfExample.pdf");
                 Response.ContentType = "application/pdf";
                 Response.OutputStream.Write(memory.GetBuffer(), 0, memory.GetBuffer().Length);

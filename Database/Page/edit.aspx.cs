@@ -99,6 +99,7 @@ namespace Database
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
             DateBox.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
+            Calendar1.Visible = false;
         }
 
 
@@ -243,6 +244,11 @@ namespace Database
             else if(!Foolproof.DateFoolproof(e.InputParameters["DeliveryDate"].ToString()))
             {
                 Response.Write("<script>alert('納品書日格式為yyyy/MM/dd');</script>");
+                e.Cancel = true;
+            }
+            else if(!Foolproof.IntFoolproof(e.InputParameters["colorNum"].ToString()))
+            {
+                Response.Write("<script>alert('色番格式錯誤');</script>");
                 e.Cancel = true;
             }
             else if(!Foolproof.IntFoolproof(e.InputParameters["unshipment"].ToString()))

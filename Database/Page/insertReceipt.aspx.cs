@@ -483,6 +483,7 @@ namespace Database
             {
                 shipDate.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
             }
+            (sender as Calendar).Visible = false;
         }
 
         protected void GridView2_SelectedIndexChanged(object sender, EventArgs e)
@@ -625,6 +626,7 @@ namespace Database
         {
             int index = (((Calendar)sender).NamingContainer as GridViewRow).RowIndex;
             (GridView1.Rows[index].FindControl("Label18") as TextBox).Text=(sender as Calendar).SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void footerImageButton_Click(object sender, ImageClickEventArgs e)
@@ -642,6 +644,7 @@ namespace Database
         protected void footerCalendar_SelectionChanged(object sender, EventArgs e)
         {
             (GridView1.FooterRow.FindControl("shippedDateBox") as TextBox).Text = (sender as Calendar).SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
     }
 }

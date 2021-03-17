@@ -159,7 +159,7 @@ namespace Database
                             "'" + i.size + "', "
                              + i.amount + ", " +
                             "'" + i.brand + "', "
-                             + 0 + ", "
+                             + i.shipment + ", "
                              + i.amount + ", " +
                             "'" + User.Identity.Name + "', " +
                             "'" + currentTime.ToString("yyyy/MM/dd") + "', " +
@@ -246,15 +246,8 @@ namespace Database
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
-            switch(status)
-            {
-                case 1:
-                    DateBox.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
-                    break;
-                case 2:
-                    fileDateBox.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
-                    break;
-            }
+            DateBox.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void amountBox_TextChanged(object sender, EventArgs e)
@@ -293,6 +286,7 @@ namespace Database
         protected void Calendar2_SelectionChanged(object sender, EventArgs e)
         {
             ((TextBox)GridView1.FooterRow.FindControl("DeliveryDateBox")).Text= ((Calendar)sender).SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void itemimgcalbut_Click(object sender, ImageClickEventArgs e)
@@ -314,6 +308,7 @@ namespace Database
             Calendar calendar = (Calendar)sender;
             int index = (calendar.NamingContainer as GridViewRow).RowIndex;
             ((TextBox)GridView1.Rows[index].FindControl("tDeliveryDate")).Text = calendar.SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void DropDownList3_Load(object sender, EventArgs e)
@@ -346,6 +341,23 @@ namespace Database
                 foreach (string colName in vs)
                     ddl.Items.Add(new ListItem(colName));
             }
+        }
+
+
+        protected void tunshipment_TextChanged(object sender, EventArgs e)
+        {
+            int index = (((TextBox)sender).NamingContainer as GridViewRow).RowIndex;
+            insertModeDetailAccessLayer.details[index].unshipment = ((TextBox)sender).Text;
+            insertModeDetailAccessLayer.details[index].shipment = (Convert.ToInt32(insertModeDetailAccessLayer.details[index].amount) - Convert.ToInt32(((TextBox)sender).Text)).ToString();
+            GridView1.DataBind();
+        }
+
+        protected void tshipment_TextChanged(object sender, EventArgs e)
+        {
+            int index = (((TextBox)sender).NamingContainer as GridViewRow).RowIndex;
+            insertModeDetailAccessLayer.details[index].shipment = ((TextBox)sender).Text;
+            insertModeDetailAccessLayer.details[index].unshipment = (Convert.ToInt32(insertModeDetailAccessLayer.details[index].amount) - Convert.ToInt32(((TextBox)sender).Text)).ToString();
+            GridView1.DataBind();
         }
     }
 }

@@ -162,6 +162,7 @@ namespace Database
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
             recieptDate.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
 

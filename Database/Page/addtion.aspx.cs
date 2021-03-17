@@ -70,11 +70,13 @@ namespace Database.Page
             Calendar calendar = (Calendar)sender;
             int index = (calendar.NamingContainer as GridViewRow).RowIndex;
             ((TextBox)GridView1.Rows[index].FindControl("tDeliveryDate")).Text = calendar.SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void Calendar2_SelectionChanged(object sender, EventArgs e)
         {
             ((TextBox)GridView1.FooterRow.FindControl("DeliveryDateBox")).Text = ((Calendar)sender).SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void Footerimgcalbut_Click(object sender, ImageClickEventArgs e)
@@ -168,15 +170,8 @@ namespace Database.Page
 
         protected void Calendar1_SelectionChanged(object sender, EventArgs e)
         {
-            switch (status)
-            {
-                case 1:
-                    DateBox.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
-                    break;
-                case 2:
-                    fileDateBox.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
-                    break;
-            }
+            DateBox.Text = Calendar1.SelectedDate.ToString("yyyy/MM/dd");
+            (sender as Calendar).Visible = false;
         }
 
         protected void Calendar5_SelectionChanged(object sender, EventArgs e)
@@ -184,7 +179,7 @@ namespace Database.Page
             Calendar calendar = (Calendar)sender;
             int index = (calendar.NamingContainer as GridViewRow).RowIndex;
             ((TextBox)GridView1.Rows[index].FindControl("treplyDate")).Text = calendar.SelectedDate.ToString("yyyy/MM/dd");
-
+            (sender as Calendar).Visible = false;
         }
 
         protected void Calendar4_SelectionChanged(object sender, EventArgs e)
@@ -192,7 +187,7 @@ namespace Database.Page
             Calendar calendar = (Calendar)sender;
             int index = (calendar.NamingContainer as GridViewRow).RowIndex;
             ((TextBox)GridView1.FooterRow.FindControl("replyDateBox")).Text = calendar.SelectedDate.ToString("yyyy/MM/dd");
-
+            (sender as Calendar).Visible = false;
         }
 
         protected void Footerimgcalbut2_Click(object sender, ImageClickEventArgs e)
@@ -249,11 +244,6 @@ namespace Database.Page
                     Response.Write("<script>alert('訂單日期格式為yyyy/MM/dd')</script>");
                     flag = false;
                 }
-                else if (!Foolproof.DateFoolproof(fileDateBox.Text))
-                {
-                    Response.Write("<script>alert('建檔日期錯誤')</script>");
-                    flag = false;
-                }
                 else
                 {
                     foreach (var i in orderDetails)
@@ -267,6 +257,12 @@ namespace Database.Page
                         if (!Foolproof.DateFoolproof(i.replyDate))
                         {
                             Response.Write("<script>alert('日期格式為yyyy/MM/dd');</script>");
+                            flag = false;
+                            break;
+                        }
+                        if (!Foolproof.IntFoolproof(i.colorNum))
+                        {
+                            Response.Write("<script>alert('色番格式錯誤');</script>");
                             flag = false;
                             break;
                         }
@@ -381,6 +377,22 @@ namespace Database.Page
                 foreach (string colName in vs)
                     ddl.Items.Add(new ListItem(colName));
             }
+        }
+
+        protected void tunshipment_TextChanged(object sender, EventArgs e)
+        {
+            int index = (((TextBox)sender).NamingContainer as GridViewRow).RowIndex;
+            insertModeDetailAccessLayer.details[index].unshipment = ((TextBox)sender).Text;
+            insertModeDetailAccessLayer.details[index].shipment = (Convert.ToInt32(insertModeDetailAccessLayer.details[index].amount) - Convert.ToInt32(((TextBox)sender).Text)).ToString();
+            GridView1.DataBind();
+        }
+
+        protected void tshipment_TextChanged(object sender, EventArgs e)
+        {
+            int index = (((TextBox)sender).NamingContainer as GridViewRow).RowIndex;
+            insertModeDetailAccessLayer.details[index].shipment = ((TextBox)sender).Text;
+            insertModeDetailAccessLayer.details[index].unshipment = (Convert.ToInt32(insertModeDetailAccessLayer.details[index].amount) - Convert.ToInt32(((TextBox)sender).Text)).ToString();
+            GridView1.DataBind();
         }
     }
 }

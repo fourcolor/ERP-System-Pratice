@@ -217,6 +217,7 @@ namespace Database
                     TextBox7.Text = s;
                     break;
             }
+            Calendar1.Visible = false;
         }
 
         protected void guestButton_Click(object sender, ImageClickEventArgs e)
@@ -307,6 +308,7 @@ namespace Database
                 CheckBox8.Enabled = true;
                 GridView1.Visible = true;
                 GridView2.Visible = true;
+                GridView4.Visible = false;
             }
             else
             {
@@ -319,7 +321,7 @@ namespace Database
                 CheckBox7.Enabled = true;
                 CheckBox8.Enabled = false;
                 GridView1.Visible = false;
-                GridView1.Visible = false;
+                GridView4.Visible = true;
             }
         }
 
