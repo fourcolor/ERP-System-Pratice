@@ -67,7 +67,7 @@
         </p>
         <asp:DropDownList ID="DropDownList1" class="user" runat="server" multiple AppendDataBoundItems="True" OnDataBound="DropDownList1_DataBound" OnSelectedIndexChanged="DropDownList1_SelectedIndexChanged1">
         </asp:DropDownList>
-        <asp:GridView ID="GridView1" runat="server">
+        <asp:GridView ID="GridView1" runat="server" OnSelectedIndexChanged="GridView1_SelectedIndexChanged">
             <Columns>
                 <asp:TemplateField HeaderText="1">
                     <EditItemTemplate>

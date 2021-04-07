@@ -64,5 +64,21 @@ namespace Database.Page
         {
 
         }
+
+        protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
+/*
+ *xZxhKxj
+ *zxczxc
+ *xczxc
+ *bcvbfdg
+ *nbvjg
+ *hjghj
+ *dfghdfgdg
+ *xsdfs
+ *vccgf
+ */
